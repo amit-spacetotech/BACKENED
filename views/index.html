@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>360 Video Player</title>
+    <link href="https://vjs.zencdn.net/5.10.4/video-js.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="https://okomo360buck.s3.ap-south-1.amazonaws.com/Img1648145.4973035373.png">
+    <link
+      href="https://cdn.rawgit.com/yanwsh/videojs-panorama/master/dist/videojs-panorama.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reset some default styling */
+      html,
+      body,
+      div,
+      video {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Ensure full viewport height */
+      html,
+      body {
+        height: 100%;
+      }
+
+      /* Set a minimum width for better layout on smaller screens */
+      .player-wrapper {
+        position: relative;
+        width: 100%;
+        min-width: 320px;
+        min-height: 50vw;
+        height: 50vw;
+        max-height: 100vh;
+      }
+      .video-js.vjs-panorama {
+        width: 100% !important;
+        height: 100% !important;
+      }
+      /* Style the video player container */
+      .player {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .video-js.vjs-panorama .vjs-video-canvas {
+        width: 100% !important;
+        height: 100% !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="player-wrapper">
+      <video
+        id="player"
+        class="player video-js vjs-default-skin vjs-big-play-centered"
+        crossorigin="anonymous"
+        preload="metadata"
+        autoplay
+        controls
+      >
+        <source
+          poster="https://raw.githubusercontent.com/Pierrinho/elephant/master/elephant.jpg"
+          src=""
+          id="video-source"
+        />
+      </video>
+    </div>
+
+    <script src="https://vjs.zencdn.net/5.10.4/video.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r76/three.js"></script>
+    <script src="https://rawgit.com/yanwsh/videojs-panorama/master/dist/videojs-panorama.v5.js"></script>
+    <script>
+      // Function to get query parameters from the URL
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      // Get the 'video' query parameter value
+      const videoUrl = getQueryParam("video");
+
+      // Set the video source URL using the extracted query parameter
+      const videoSource = document.getElementById("video-source");
+      videoSource.src = videoUrl;
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+          plugins: {
+            panorama: {
+              clickAndDrag: true,
+              clickToToggle: true,
+              autoMobileOrientation: true,
+              backToVerticalCenter: false,
+              backToHorizonCenter: false,
+            },
+          },
+        };
+        var player = videojs("player", options, function () {
+          // Player initialized
+        });
+      });
+    </script>
+  </body>
+</html>
